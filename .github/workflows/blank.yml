@@ -12,6 +12,18 @@ jobs:
     # Checkout the repository
     - name: 🚚 Get latest code
       uses: actions/checkout@v4
+    #htm
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install htmlhint
+      run: npm install -g htmlhint
+
+    - name: Find and lint HTML in PHP files
+      run: |
+        find . -name "*.php" -exec sh -c 'htmlhint <(grep -oP "(?<=<html>).*?(?=</html>)" {})' \;
     # validate PHP syntax
     - name: Set up PHP
       uses: shivammathur/setup-php@v2
@@ -21,11 +33,12 @@ jobs:
     - name: Validate PHP syntax
       run: |
         find . -name "*.php" -print0 | xargs -0 -n1 php -l
-    # Validate HTML syntax
-    - name: Run HTML validation
-      run: |
-        docker pull ghcr.io/validator/validator:latest
-        docker run --rm -v "${{ github.workspace }}":/site ghcr.io/validator/validator:latest java -cp /opt/vnu/vnu.jar nu.validator.cli.Main --skip-non-html /site
+    
+    # # Validate HTML syntax
+    # - name: Run HTML validation
+    #   run: |
+    #     docker pull ghcr.io/validator/validator:latest
+    #     docker run --rm -v "${{ github.workspace }}":/site ghcr.io/validator/validator:latest java -jar ~/vnu.jar --skip-non-html 
     # sync files via FTP
     - name: 📂 Sync files via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4

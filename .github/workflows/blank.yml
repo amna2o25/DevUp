@@ -25,7 +25,7 @@ jobs:
     - name: Run HTML validation
       run: |
         docker pull ghcr.io/validator/validator:latest
-        docker run --rm -v "${{ github.workspace }}":/site ghcr.io/validator/validator:latest java -jar /vnu.jar --skip-non-html /site  
+        docker run --rm -v "${{ github.workspace }}":/site ghcr.io/validator/validator:latest java -cp /opt/vnu/vnu.jar nu.validator.cli.Main --skip-non-html /site
     # sync files via FTP
     - name: 📂 Sync files via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4

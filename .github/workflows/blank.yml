@@ -12,8 +12,11 @@ jobs:
     # Checkout the repository
     - name: 🚚 Get latest code
       uses: actions/checkout@v4
-    
-      # Validate HTML Syntax
+    # validate PHP syntax
+    - name: Validate PHP Syntax
+      run: |
+        find . -name "*php" -print0 | xargs -0 -n1 php -1
+    # Validate HTML Syntax
     - name: Validate HTML Syntax  
       run: |
         docker run --rm -v "${{ github.workspace }}":/site ghcr.io/validator/validator:latest /vnu.jar /site --skip-non-html

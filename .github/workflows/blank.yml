@@ -15,7 +15,7 @@ jobs:
     # Validate CSS Syntax
     - name: 🎨 Validate CSS Syntax
       run: |
-        npm install -g stylelint stylelint-config-standard
+        npm install -g style stylelint-config-standard
         echo '{ "extends": "stylelint-config-standard" }' > .stylelintrc.json
         stylelint "**/*.css"
 

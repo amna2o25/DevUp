@@ -13,7 +13,7 @@ jobs:
     - name: 🚚 Get latest code
       uses: actions/checkout@v4
     # Validate CSS Syntax
-    
+
     - name: Validate CSS Syntax
       run: |
         docker run --rm -v "${{ github.workspace }}":/site ghcr.io/validator/validator:latest /vnu.jar /site --skip-non-css

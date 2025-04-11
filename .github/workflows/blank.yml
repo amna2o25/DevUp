@@ -22,9 +22,10 @@ jobs:
       run: |
         find . -name "*.php" -print0 | xargs -0 -n1 php -l
     # Validate HTML syntax
-    - name: Validate HTML syntax
+    - name: Run HTML validation
       run: |
-        docker run --rm -v "${{ github.workspace }}":/site ghcr.io/validator/validator:latest java /vnu.jar /site --skip-non-html  
+        docker pull ghcr.io/validator/validator:latest
+        docker run --rm -v "${{ github.workspace }}":/site ghcr.io/validator/validator:latest java -jar /vnu.jar --skip-non-html /site  
     # sync files via FTP
     - name: 📂 Sync files via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4

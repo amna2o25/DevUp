@@ -16,16 +16,13 @@ jobs:
     - name: Validate PHP Syntax
       run: |
         find . -name "*php" -print0 | xargs -0 -n1 php -1
-    # sync files via FTP
-    - name: 📂 Sync files via FTP
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-      # Validate HTML Syntax
+    # Validate HTML Syntax
     - name: Validate HTML Syntax  
       run: |
         docker run --rm -v "${{ github.workspace }}":/site ghcr.io/validator/validator:latest /vnu.jar /site --skip-non-html
-
-      
-
+    # sync files via FTP
+    - name: 📂 Sync files via FTP
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}

@@ -12,6 +12,13 @@ jobs:
     # Checkout the repository
     - name: 🚚 Get latest code
       uses: actions/checkout@v4
+    # Validate CSS Syntax
+    - name: 🎨 Validate CSS Syntax
+      run: |
+        npm install -g stylelint stylelint-config-standard
+        echo '{ "extends": "stylelint-config-standard" }' > .stylelintrc.json
+        stylelint "**/*.css"
+
     # Validate HTML Syntax
     - name: Validate HTML Syntax  
       run: |

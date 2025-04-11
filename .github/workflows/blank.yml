@@ -12,16 +12,23 @@ jobs:
     # Checkout the repository
     - name: 🚚 Get latest code
       uses: actions/checkout@v4
-    
-    # Validate HTML Syntax
-    - name: Validate HTML Syntax  
-      run: |
-        docker run --rm -v "${{ github.workspace }}":/site ghcr.io/validator/validator:latest /vnu.jar /site --skip-non-html
     # validate PHP syntax
     - name: Validate PHP Syntax
       run: |
         find . -name "*php" -print0 | xargs -0 -n1 php -1
-   
+    # validate HTML syntax
+    - name: Validate HTML Syntax
+      run: |
+        find . -name "*html" -print0 | xargs -0 -n1 html-validate
+    # validate CSS syntax
+    - name: Validate CSS Syntax
+      run: |
+        find . -name "*css" -print0 | xargs -0 -n1 stylelint
+    # validate JS syntax
+    - name: Validate JS Syntax
+      run: |
+        find . -name "*js" -print0 | xargs -0 -n1 eslint
+        
     # sync files via FTP
     - name: 📂 Sync files via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4

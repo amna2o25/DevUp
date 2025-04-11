@@ -22,9 +22,17 @@ jobs:
       run: |
         find . -name "*.php" -print0 | xargs -0 -n1 php -l
     # Validate HTML Syntax
-    - name: Validate HTML Syntax  
+    - name: Validate HTML Syntax
       run: |
-        docker run --rm -v "${{ github.workspace }}":/site ghcr.io/validator/validator:latest /vnu.jar /site --skip-non-html
+        find . -name "*.html" -print0 | xargs -0 -n1 tidy -quiet -errors-only
+    # Validate CSS Syntax
+    - name: Validate CSS Syntax
+      run: |
+        find . -name "*.css" -print0 | xargs -0 -n1 csslint --format=compact --errors-only
+    # Validate JavaScript Syntax
+    - name: Validate JavaScript Syntax
+      run: |
+        find . -name "*.js" -print0 | xargs -0 -n1 eslint --quiet   
     # sync files via FTP
     - name: 📂 Sync files via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
